@@ -29,7 +29,16 @@ export const LoginPage = () => {
       secret,
     },
     onError(err) {
-      console.log(err);
+      toast(err.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     },
   });
 
@@ -57,8 +66,12 @@ export const LoginPage = () => {
       progress: undefined,
       theme: "light",
     });
-    navigate("/");
   }
+  useEffect(() => {
+    if (data) {
+      navigate("/");
+    }
+  }, [navigate, data]);
 
   return (
     <Card className="w-96 m-auto min-h-screen justify-center">
@@ -68,7 +81,7 @@ export const LoginPage = () => {
         className="mb-4 grid h-28 place-items-center"
       >
         <Typography variant="h3" color="white">
-          Sign In
+          Sign Up
         </Typography>
       </CardHeader>
       <CardBody className="flex flex-col gap-4">
@@ -94,12 +107,12 @@ export const LoginPage = () => {
       </CardBody>
       <CardFooter className="pt-0">
         <Button variant="gradient" fullWidth onClick={loginUser}>
-          Sign In
+          Sign Up
         </Button>
         <Typography variant="small" className="mt-6 flex justify-center">
           Don't have an account?
           <Typography variant="small" color="blue" className="ml-1 font-bold">
-            <Link to="/register">Sign up</Link>
+            <Link to="/register">Sign in</Link>
           </Typography>
         </Typography>
       </CardFooter>
