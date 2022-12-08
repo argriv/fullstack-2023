@@ -20,6 +20,7 @@ const NavBar = () => {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+  console.log(getToken)
   useEffect(() => {
     if (getToken == null) {
       navigate("/");

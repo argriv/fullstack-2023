@@ -63,7 +63,7 @@ UserTC.addResolver({
 UserTC.addResolver({
     kind: 'mutation',
     name: 'register',
-    type: `type RegisterPayload { username: String! }`,
+    type: `type RegisterPayload { username: String, token: String}`,
     args: {
         username: 'String!',
         secret: 'String!',
@@ -77,12 +77,21 @@ UserTC.addResolver({
         }
 
         const hashedPass = await bcrypt.hash(args.secret, 10)
+
+        const token = jwt.sign(
+            {},
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '24h',
+            }
+        )
         const newuser = await User.create({
             username: args.username,
             secret: hashedPass,
             isAdmin: false,
         })
-        return { username: newuser.username }
+        return { username: newuser.username, token: token }
+
     },
 })
 
@@ -93,7 +102,7 @@ schemaComposer.Query.addFields({
 })
 schemaComposer.Mutation.addFields({
     register: UserTC.getResolver('register'),
-    loginResolver: UserTC.getResolver('login'),
+    login: UserTC.getResolver('login'),
 })
 
 schemaComposer.buildSchema()

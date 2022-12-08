@@ -52,19 +52,19 @@ export const RegisterPage = () => {
       theme: "light",
     });
   }
-  // if (data) {
-  //   if (check) saveTokens(data.loginResolver.token);
-  //   toast("Authorization successful", {
-  //     position: "top-right",
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //     progress: undefined,
-  //     theme: "light",
-  //   });
-  // }
+  if (data) {
+    if (check) saveTokens(data.register.token);
+    toast("Registration successful", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   useEffect(() => {
     if (data) {
       navigate("/");
@@ -103,7 +103,7 @@ export const RegisterPage = () => {
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-      <Button variant="gradient" fullWidth onClick={registerUser}>
+        <Button variant="gradient" fullWidth onClick={registerUser}>
           Sign In
         </Button>
         <Typography variant="small" className="mt-6 flex justify-center">

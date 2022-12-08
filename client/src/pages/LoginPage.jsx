@@ -55,7 +55,7 @@ export const LoginPage = () => {
     });
   }
   if (data) {
-    if (check) saveTokens(data.loginResolver.token);
+    if (check) saveTokens(data.login.token);
     toast("Authorization successful", {
       position: "top-right",
       autoClose: 5000,
