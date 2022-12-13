@@ -1,9 +1,18 @@
 import React from "react";
-import { Typography } from "@material-tailwind/react";
 import CardList from "../components/CardList";
-
+import { MultiList } from "@appbaseio/reactivesearch";
 const MainPage = () => {
-  return <CardList />;
+  return (
+    <>
+      {/* <MultiList
+        componentId="authorsfilter"
+        dataField="authors.keyword"
+        title="Filter by Authors"
+        aggregationSize={5}
+      /> */}
+      <CardList />
+    </>
+  );
 };
 
 export default MainPage;
