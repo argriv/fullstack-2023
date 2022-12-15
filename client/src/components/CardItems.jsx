@@ -12,7 +12,7 @@ import { Button } from "@material-tailwind/react";
 const CardItems = () => {
   return (
     <div className="flex justify-center h-full">
-      <Card className="w-96 mb-8 lg:mb-0">
+      <Card className="w-96 mb-8">
         <CardHeader color="blue" className="relative h-56">
           <img
             src="/img/blog.jpg"
@@ -20,17 +20,12 @@ const CardItems = () => {
             className="h-full w-full"
           />
         </CardHeader>
-        <CardBody className="text-center">
+        <CardBody className="text-center p-0 pt-2">
           <Typography variant="h5" className="mb-2">
-            Cozy 5 Stars Apartment
-          </Typography>
-          <Typography>
-            The place is close to Barceloneta Beach and bus stop just 2 min by
-            walk and near to "Naviglio" where you can enjoy the main night life
-            in Barcelona.
+            Still life painting
           </Typography>
         </CardBody>
-        <CardFooter divider className="flex items-center py-3 flex-col">
+        <CardFooter divider className="flex items-center py-3 flex-col p-2">
           <div className="flex justify-between w-full mb-2">
             <Typography variant="small">$899/night</Typography>
             <Typography variant="small" color="gray" className="flex gap-1">

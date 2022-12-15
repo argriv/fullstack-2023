@@ -7,7 +7,7 @@ export const Layout = ({ children }) => {
   return (
     <React.Fragment>
       {location.pathname === "/" ? <NavBar /> : null}
-      <div className="container mx-auto px-2 md:max-w-4xl lg:max-w-6xl">{children}</div>
+      <div className="container mx-auto px-2 md:max-w-4xl lg:max-w-7xl pt-32">{children}</div>
       {location.pathname === "/" ? <Footer /> : null}
     </React.Fragment>
   );
