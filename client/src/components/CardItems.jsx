@@ -6,7 +6,7 @@ import {
   CardFooter,
   Typography,
 } from "@material-tailwind/react";
-import HoverRating from "./Rating";
+import HoverRating from "./UI/Rating";
 import { Button } from "@material-tailwind/react";
 
 const CardItems = () => {
