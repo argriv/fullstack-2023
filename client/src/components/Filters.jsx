@@ -1,88 +1,105 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../graphql/query";
-//add query GET_PRODUCT
-const Filters = () => {
-  // State for storing the selected filters
-  const [filters, setFilters] = useState({
-    priceRange: [],
-    rating: 0,
+import { PRODUCTS_MANY } from "../graphql/query";
+import MultiRangeSlider from "multi-range-slider-react";
+
+const Filter = () => {
+
+  const [minValue, set_minValue] = useState(25);
+  const [maxValue, set_maxValue] = useState(75);
+  const handleInput = (e) => {
+    set_minValue(e.minValue);
+    set_maxValue(e.maxValue);
+  };
+  const [filter, setFilter] = useState({
+    priceRange: { gt: minValue, lt: maxValue },
+    rating: 3,
     positions: [],
   });
-  
+
   // Query the products from the fake GraphQL API
-  const { loading, error, data } = useQuery(GET_PRODUCTS, {
-    variables: { filters },
+  const { loading, error, data } = useQuery(PRODUCTS_MANY, {
+    variables: { filter },
   });
 
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+
 
   // Event handler for when the price range filter is changed
-  function handlePriceRangeChange(event) {
-    setFilters({
-      ...filters,
-      priceRange: event.target.value,
+  const handlePriceRangeChange = (event) => {
+    setFilter({
+      ...filter,
+      priceRange: { gt: minValue, lt: maxValue },
     });
   }
 
   // Event handler for when the rating filter is changed
-  function handleRatingChange(event) {
-    setFilters({
-      ...filters,
+  const handleRatingChange = (event) => {
+    setFilter({
+      ...filter,
       rating: event.target.value,
     });
   }
 
   // Event handler for when the number of stars filter is changed
-  function handleNumStarsChange(event) {
-    setFilters({
-      ...filters,
+  const handleNumStarsChange = (event) => {
+    setFilter({
+      ...filter,
       numStars: event.target.value,
     });
   }
 
   // Event handler for when a position filter is selected
-  function handlePositionChange(event) {
+  const handlePositionChange = (event) => {
     const position = event.target.value;
-    if (filters.positions.includes(position)) {
-      // Remove the position from the filters if it is already selected
-      setFilters({
-        ...filters,
-        positions: filters.positions.filter((p) => p !== position),
+    if (filter.positions.includes(position)) {
+      // Remove the position from the filter if it is already selected
+      setFilter({
+        ...filter,
+        positions: filter.positions.filter((p) => p !== position),
       });
     } else {
-      // Add the position to the filters if it is not already selected
-      setFilters({
-        ...filters,
-        positions: [...filters.positions, position],
+      // Add the position to the filter if it is not already selected
+      setFilter({
+        ...filter,
+        positions: [...filter.positions, position],
       });
     }
   }
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between">
-      <div className="w-full md:w-1/3 px-4 py-2">
-        <label
-          htmlFor="price-range"
-          className="block font-bold mb-2 text-gray-800"
-        >
-          Price Range
-        </label>
-        <select
-          id="price-range"
-          className="block w-full px-4 py-2 rounded-lg shadow-sm appearance-none focus:outline-none"
-          value={filters.priceRange}
-          onChange={handlePriceRangeChange}
-        >
-          <option value="">All</option>
-          <option value="0-50">$0 - $50</option>
-          <option value="50-100">$50 - $100</option>
-          <option value="100-500">$100 - $500</option>
-          <option value="500+">$500+</option>
-        </select>
+    <div className="flex flex-col md:justify-between">
+      <label
+        for="default-range"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >
+        Default range
+      </label>
+      <div>
+      <MultiRangeSlider
+        min={0}
+        max={10000000}
+        step={5}
+        className="border-none shadow-none"
+        ruler="false"
+        label="false"
+        barLeftColor="#BBBBBB"
+        barInnerColor="#BBBBBB"
+        barRightColor="#BBBBBB"
+        thumbLeftColor="#1e90ff"
+        thumbRightColor="#1e90ff"
+        minValue={minValue}
+        maxValue={maxValue}
+        onChange={handlePriceRangeChange}
+        onInput={(e) => {
+          handleInput(e);
+        }}
+      />
+      <div className="flex justify-between">
+        <div>{minValue}</div>
+        <div>{maxValue}</div>
       </div>
-      <div className="w-full md:w-1/3 px-4 py-2">
+      </div>
+      <div className="w-full  px-4 py-2">
         <label htmlFor="rating" className="block font-bold mb-2 text-gray-800">
           Minimum Rating
         </label>
@@ -90,14 +107,14 @@ const Filters = () => {
           type="number"
           id="rating"
           className="block w-full px-4 py-2 rounded-lg shadow-sm appearance-none focus:outline-none"
-          value={filters.rating}
+          value={filter.rating}
           onChange={handleRatingChange}
           min="0"
           max="5"
           step="0.5"
         />
       </div>
-      <div className="w-full md:w-1/3 px-4 py-2">
+      <div className="w-full  px-4 py-2">
         <label
           htmlFor="num-stars"
           className="block font-bold mb-2 text-gray-800"
@@ -108,7 +125,7 @@ const Filters = () => {
           type="number"
           id="num-stars"
           className="block w-full px-4 py-2 rounded-lg shadow-sm appearance-none focus:outline-none"
-          value={filters.numStars}
+          value={filter.numStars}
           onChange={handleNumStarsChange}
           min="0"
         />
@@ -128,7 +145,7 @@ const Filters = () => {
                 id="position-1"
                 className="form-checkbox"
                 value="Position 1"
-                checked={filters.positions.includes("Position 1")}
+                checked={filter.positions.includes("Position 1")}
                 onChange={handlePositionChange}
               />
               <span className="ml-2">Position 1</span>
@@ -141,7 +158,7 @@ const Filters = () => {
                 id="position-2"
                 className="form-checkbox"
                 value="Position 2"
-                checked={filters.positions.includes("Position 2")}
+                checked={filter.positions.includes("Position 2")}
                 onChange={handlePositionChange}
               />
               <span className="ml-2">Position 2</span>
@@ -154,7 +171,7 @@ const Filters = () => {
                 id="position-3"
                 className="form-checkbox"
                 value="Position 3"
-                checked={filters.positions.includes("Position 3")}
+                checked={filter.positions.includes("Position 3")}
                 onChange={handlePositionChange}
               />
               <span className="ml-2">Position 3</span>
@@ -166,7 +183,7 @@ const Filters = () => {
                   id="position-4"
                   className="form-checkbox"
                   value="Position 4"
-                  checked={filters.positions.includes("Position 4")}
+                  checked={filter.positions.includes("Position 4")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 4</span>
@@ -179,7 +196,7 @@ const Filters = () => {
                   id="position-5"
                   className="form-checkbox"
                   value="Position 5"
-                  checked={filters.positions.includes("Position 5")}
+                  checked={filter.positions.includes("Position 5")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 5</span>
@@ -192,4 +209,4 @@ const Filters = () => {
   );
 };
 
-export default Filters;
+export default Filter;

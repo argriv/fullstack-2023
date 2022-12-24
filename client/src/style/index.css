@@ -3,3 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.multi-range-slider .thumb::before {
+    border: none !important; 
+    box-shadow:  none !important;
+    margin: -6px -12px !important; 
+}
+.min-caption, .max-caption {
+    box-shadow:  none !important;
+    background: #1e90ff !important;
+}
+.multi-range-slider .bar-inner {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.multi-range-slider .bar-left, .bar-right {
+    box-shadow: none !important;
+}
