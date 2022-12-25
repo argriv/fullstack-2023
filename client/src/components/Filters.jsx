@@ -60,17 +60,17 @@ const Filter = () => {
         <div className="block font-bold text-base text-gray-800">Price</div>
         <div className="flex justify-between items-center">
             <input
-              type="text"
+              type="number"
               className='w-full px-4 py-2 bg-white border rounded-md focus:border-sky-600 focus:ring-sky-600 focus:outline-none focus:ring-2 focus:ring-opacity-40'
               value={minValue}
-              onChange={(e) => set_minValue(e.target.value)}
+              onChange={(e) => set_minValue(Number(e.target.value))}
             />
             <span className="w-12 h-1 bg-gray-300 mx-1 rounded-md"></span>
             <input
-              type="text"
+              type="number"
               className='w-full px-4 py-2 bg-white border rounded-md focus:border-sky-600 focus:ring-sky-600 focus:outline-none focus:ring-2 focus:ring-opacity-40'
               value={maxValue}
-              onChange={(e) => set_maxValue(e.target.value)}
+              onChange={(e) => set_maxValue(Number(e.target.value))}
             />
         </div>
         <MultiRangeSlider
