@@ -13,15 +13,13 @@ const method = (tc, name) => (
                     lt: Int
                 }`,
                 description: 'Search by price range',
-                defaultValue: { gt: 0, lt: 100 },
+                defaultValue: { gt: 0, lt: 100000000 },
                 query: (rawQuery, value, resolveParams) => {
                     if (value.gt || value.lt) {
                         const price = {}
-                        console.log(value)
                         if (value.gt) price.$gt = value.gt
                         if (value.lt) price.$lt = value.lt
                         rawQuery.price = price
-                        console.log(rawQuery.price)
                     }
                 },
             })
