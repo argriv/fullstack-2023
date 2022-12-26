@@ -24,7 +24,7 @@ const createModel = (name, definition) => {
 
 
     
-    return method(tc, name)
+    return method(tc, name, model)
 }
 
 module.exports = createModel

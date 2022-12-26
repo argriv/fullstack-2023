@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Checkbox } from "@material-tailwind/react";
 import {
   Accordion,
@@ -12,7 +12,14 @@ const Positions = ({ filter, handlePositionChange }) => {
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
-  
+
+  // use useMemo to memoize the values for the checked prop of the Checkbox components
+  const isPositionSelected = useMemo(() => {
+    return (position) => {
+      return filter?.positions?.includes(position);
+    };
+  }, [filter]);
+
   return (
     <Accordion open={open === 1}>
       <AccordionHeader onClick={() => handleOpen(1)} className="py-0 border-0">
@@ -26,9 +33,8 @@ const Positions = ({ filter, handlePositionChange }) => {
             <div className="px-2">
               <label htmlFor="position-1" className="inline-flex items-center">
                 <Checkbox
-                  defaultChecked
                   value="Position 1"
-                  checked={filter?.positions.includes("Position 1")}
+                  checked={isPositionSelected("Position 1")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 1</span>
@@ -37,9 +43,8 @@ const Positions = ({ filter, handlePositionChange }) => {
             <div className="px-2">
               <label htmlFor="position-2" className="inline-flex items-center">
                 <Checkbox
-                  defaultChecked
                   value="Position 2"
-                  checked={filter?.positions.includes("Position 2")}
+                  checked={isPositionSelected("Position 2")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 2</span>
@@ -48,9 +53,8 @@ const Positions = ({ filter, handlePositionChange }) => {
             <div className="px-2">
               <label htmlFor="position-3" className="inline-flex items-center">
                 <Checkbox
-                  defaultChecked
                   value="Position 3"
-                  checked={filter?.positions.includes("Position 3")}
+                  checked={isPositionSelected("Position 3")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 3</span>
@@ -59,9 +63,8 @@ const Positions = ({ filter, handlePositionChange }) => {
             <div className="px-2">
               <label htmlFor="position-4" className="inline-flex items-center">
                 <Checkbox
-                  defaultChecked
                   value="Position 4"
-                  checked={filter?.positions.includes("Position 4")}
+                  checked={isPositionSelected("Position 4")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 4</span>
@@ -70,9 +73,8 @@ const Positions = ({ filter, handlePositionChange }) => {
             <div className="px-2">
               <label htmlFor="position-5" className="inline-flex items-center">
                 <Checkbox
-                  defaultChecked
                   value="Position 5"
-                  checked={filter?.positions.includes("Position 5")}
+                  checked={isPositionSelected("Position 5")}
                   onChange={handlePositionChange}
                 />
                 <span className="ml-2">Position 5</span>

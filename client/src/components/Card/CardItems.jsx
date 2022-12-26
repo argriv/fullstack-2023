@@ -6,10 +6,10 @@ import {
   CardFooter,
   Typography,
 } from "@material-tailwind/react";
-import HoverRating from "./UI/Rating";
+import HoverRating from "../Rating/Rating";
 import { Button } from "@material-tailwind/react";
 
-const CardItems = () => {
+const CardItems = ({ data }) => {
   return (
     <div className="flex justify-center h-full">
       <Card className="w-96 mb-8">
@@ -22,19 +22,19 @@ const CardItems = () => {
         </CardHeader>
         <CardBody className="text-center p-0 pt-2">
           <Typography variant="h5" className="mb-2">
-            Still life painting
+            {data.title}
           </Typography>
         </CardBody>
         <CardFooter divider className="flex items-center py-3 flex-col p-2">
           <div className="flex justify-between w-full mb-2">
-            <Typography variant="small">$899/night</Typography>
+            <Typography variant="small">{data.price}</Typography>
             <Typography variant="small" color="gray" className="flex gap-1">
               <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
               Barcelona, Spain
             </Typography>
           </div>
           <div className="flex justify-between w-full">
-            <HoverRating />
+            <HoverRating data={data} />
             <Button>Купить</Button>
           </div>
         </CardFooter>

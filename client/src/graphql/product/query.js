@@ -8,7 +8,7 @@ export const PRODUCTS_MANY = gql`
       text
       price
       rating
-      positions
+      position
       _id
       created_at
       updated_at

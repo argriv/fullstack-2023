@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./Navbar";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Footer from "./Footer";
 export const Layout = ({ children }) => {
   const location = useLocation();

@@ -1,11 +1,11 @@
 const { schemaComposer } = require('graphql-compose')
 const adminAccess = require('../utils/admin-access')
-const method = (tc, name) => (
-
+const method = (tc, name, model) => (
     schemaComposer.Query.addFields({
         [name + '_ById']: tc.getResolver('findById'),
         [name + '_ByIds']: tc.getResolver('findByIds'),
-        [name + '_Many']: tc.getResolver('findMany')
+        [name + '_Many']: tc
+            .getResolver('findMany')
             .addFilterArg({
                 name: 'priceRange',
                 type: `input IntRange {
@@ -24,14 +24,33 @@ const method = (tc, name) => (
                 },
             })
             .addFilterArg({
-                name: 'rating',
+                name: 'ratings',
                 type: 'Int',
                 description: 'Search by rating',
-                defaultValue: 0,
-                query: (rawQuery, value, resolveParams) => {
+                defaultValue: null,
+                query: async (rawQuery, value, resolveParams) => {
+                    const filters = resolveParams.args.filter
+                    if (filters.rating === null) {
+                        const allData = await model.find({})
+                        return allData
+                    }
                     rawQuery.rating = value
+
                 },
-            }),
+            })
+            .addFilterArg({
+                name: 'positions',
+                type: '[String]',
+                description: 'Filter by positions',
+                query: async (rawQuery, value, resolveParams) => {
+                    const filters = resolveParams.args.filter
+                    if (filters.positions === null) {
+                        const allData = await model.find({})
+                        return allData
+                    }
+                    rawQuery.positions  = { $in: value }
+                },
+            })
     }),
     schemaComposer.Mutation.addFields({
         [name + '_CreateOne']: tc.getResolver('createOne'),

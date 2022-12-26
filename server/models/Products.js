@@ -6,7 +6,7 @@ const Products = createModel('Products', {
     text: { type: String, required: true },
     price: Number,
     rating: Number,
-    positions: [String],
+    position: [String],
 })
 
 module.exports = Products

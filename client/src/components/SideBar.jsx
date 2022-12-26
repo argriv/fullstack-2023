@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Filters from "./Filters";
-const SideBar = () => {
+const SideBar = ({ onDataChange }) => {
   return (
     <aside className="w-64" aria-label="Sidebar">
-      <Filters />
+      <Filters onDataChange={onDataChange}/>
     </aside>
   );
 };
